@@ -11,6 +11,7 @@ public:
 	int envelope_open(EVP_PKEY *priv_key, unsigned char *ciphertext, int ciphertext_len,
 		unsigned char *encrypted_key, int encrypted_key_len, unsigned char *iv,
 		unsigned char *plaintext);
+	void get_pubKey_from_pem(const char* file_name, EVP_PKEY** key);
 
 	void handleErrors();
 	cryptography();

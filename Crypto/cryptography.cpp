@@ -1,11 +1,42 @@
 #include "pch.h"
 #include "cryptography.h"
-
+#include <openssl/pem.h>
+#include <openssl/applink.c>
 
 cryptography::cryptography()
 {
 }
 
+void cryptography::get_pubKey_from_pem(const char* file_name, EVP_PKEY** pubKey)
+{
+	FILE *pem_pubKey_file;
+	//pem_pubKey_file = fopen(file_name, "rb");
+	int error = fopen_s(&pem_pubKey_file, file_name, "rt");
+	//if (error != 0)
+	//{
+	//	return;
+	//}
+
+	//int c;
+	//while ((c = getc(pem_pubKey_file)) != EOF)
+	//	putchar(c);
+	//fclose(pem_pubKey_file);
+
+	//fflush(pem_pubKey_file);
+
+	//_setmode(_fileno(pem_pubKey_file), _O_U8TEXT);
+	*pubKey = PEM_read_PUBKEY(pem_pubKey_file, NULL, NULL, NULL);
+	if (!pubKey)
+	{
+		handleErrors();
+	}
+	else
+	{
+		//BIO* bio = BIO_new_fp(stdout, BIO_NOCLOSE);
+		//EVP_PKEY_print_public(bio, *pubKey, 3, NULL); //this will print this pubKey to the console
+		//BIO_free(bio);
+	}
+}
 
 int cryptography::envelope_seal(EVP_PKEY **pub_key, unsigned char *plaintext, int plaintext_len,
 	unsigned char **encrypted_key, int *encrypted_key_len, unsigned char *iv,

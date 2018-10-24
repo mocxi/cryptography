@@ -758,6 +758,9 @@
     <ClCompile Include="..\..\..\crypto\rsa\rsa_x931g.c">
       <Filter>Source Files\crypto\rsa</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\include\openssl\applink.c">
+      <Filter>Header Files\openssl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\ssl\statem\README">

@@ -349,6 +349,7 @@
     <ClCompile Include="..\..\..\crypto\threads_pthread.c" />
     <ClCompile Include="..\..\..\crypto\threads_win.c" />
     <ClCompile Include="..\..\..\crypto\uid.c" />
+    <ClCompile Include="..\..\..\include\openssl\applink.c" />
     <ClCompile Include="..\..\..\ssl\bio_ssl.c" />
     <ClCompile Include="..\..\..\ssl\d1_lib.c" />
     <ClCompile Include="..\..\..\ssl\d1_msg.c" />
