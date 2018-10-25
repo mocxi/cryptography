@@ -10,21 +10,8 @@ cryptography::cryptography()
 void cryptography::get_pubKey_from_pem(const char* file_name, EVP_PKEY** pubKey)
 {
 	FILE *pem_pubKey_file;
-	//pem_pubKey_file = fopen(file_name, "rb");
 	int error = fopen_s(&pem_pubKey_file, file_name, "rt");
-	//if (error != 0)
-	//{
-	//	return;
-	//}
 
-	//int c;
-	//while ((c = getc(pem_pubKey_file)) != EOF)
-	//	putchar(c);
-	//fclose(pem_pubKey_file);
-
-	//fflush(pem_pubKey_file);
-
-	//_setmode(_fileno(pem_pubKey_file), _O_U8TEXT);
 	*pubKey = PEM_read_PUBKEY(pem_pubKey_file, NULL, NULL, NULL);
 	if (!pubKey)
 	{
@@ -38,10 +25,37 @@ void cryptography::get_pubKey_from_pem(const char* file_name, EVP_PKEY** pubKey)
 	}
 }
 
+void cryptography::get_privateKey_from_pem(const char* file_name, EVP_PKEY** privateKey)
+{
+	FILE *pem_pubKey_file;
+	//pem_pubKey_file = fopen(file_name, "rb");
+	int error = fopen_s(&pem_pubKey_file, file_name, "rt");
+
+	// console will ask u to enter the pwd. hell yeah
+	*privateKey = PEM_read_PrivateKey(pem_pubKey_file, NULL, NULL, NULL);
+	if (!privateKey)
+	{
+		handleErrors();
+	}
+	else
+	{
+		//BIO* bio = BIO_new_fp(stdout, BIO_NOCLOSE);
+		//EVP_PKEY_print_public(bio, *privateKey, 3, NULL); //this will print this pubKey to the console
+		//BIO_free(bio);
+	}
+}
+
 int cryptography::envelope_seal(EVP_PKEY **pub_key, unsigned char *plaintext, int plaintext_len,
 	unsigned char **encrypted_key, int *encrypted_key_len, unsigned char *iv,
 	unsigned char *ciphertext)
 {
+	/**
+	 * ek is an array of buffers where the public key encrypted secret key will be written,
+	 * each buffer must contain enough room for the corresponding encrypted key.
+	 * That is ek[i] must have room for EVP_PKEY_size(pubk[i]) bytes
+	 * https://www.techopedia.com/definition/24865/secret-key
+	 */
+
 	EVP_CIPHER_CTX *ctx;
 
 	int ciphertext_len;

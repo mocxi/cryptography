@@ -12,7 +12,7 @@ public:
 		unsigned char *encrypted_key, int encrypted_key_len, unsigned char *iv,
 		unsigned char *plaintext);
 	void get_pubKey_from_pem(const char* file_name, EVP_PKEY** key);
-
+	void get_privateKey_from_pem(const char* file_name, EVP_PKEY** pubKey);
 	void handleErrors();
 	cryptography();
 	~cryptography();
